@@ -1,0 +1,20 @@
+{
+  "template": "https://github.com/blackary/cookiecutter-streamlit-component/",
+  "commit": "c972054b7b0890a1aa1c02e792bedc71c525ea87",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author_name": "Berkutsoft 11",
+      "author_email": "berkut1011@gmail.com",
+      "project_name": "Streamlit telegram login",
+      "package_name": "streamlit-telegram-login",
+      "import_name": "streamlit_telegram_login",
+      "description": "Streamlit component that implements a telegram bot widget",
+      "deployment_via_github_actions": "y",
+      "working_with_dataframes": "n",
+      "open_source_license": "GNU General Public License v3",
+      "_template": "https://github.com/blackary/cookiecutter-streamlit-component/"
+    }
+  },
+  "directory": null
+}
