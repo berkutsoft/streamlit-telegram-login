@@ -14,9 +14,12 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(where="src"),
-    package_dir={"": "src"},
     include_package_data=True,
     classifiers=[],
     python_requires=">=3.7",
-    install_requires=["streamlit>=1.2", "jinja2"],
+    install_requires=[
+        "streamlit>=1.2",
+        "jinja2",
+        "PyYAML >= 5.3.1",
+    ],
 )

@@ -1,10 +1,8 @@
-witget_settings:
-  bot_username: "Berkut11_Bot"
+widget:
+  bot_username: "bot_name" # str required
   button_style: "large"  # "large", "medium", or "small"
   userpic: true # Set to False if you do not want to display the user's photo
   corner_radius: null # or int for custom corner radius
   request_access: true # Set to send messages from your bot
 cookie:
   expiry_days: 30
-  key: some_signature_key # Must be string
-  name: some_cookie_name

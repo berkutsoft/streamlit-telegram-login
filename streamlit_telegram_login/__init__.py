@@ -1,7 +1,8 @@
 import os
+from datetime import datetime, timedelta
 from typing import Optional
-
 import streamlit.components.v1 as components
+
 
 _RELEASE = __name__ != "__main__"
 # comment out the following line to use the local dev server
@@ -20,15 +21,19 @@ class TelegramLoginWidgetComponent:
         button_style: str = "large",
         userpic: bool = True,
         corner_radius: Optional[int] = None,
-        request_access: bool = True
+        request_access: bool = True,
+        cookie_expiry_days: float = 30.0
     ):
         self.bot_username = bot_username
         self.button_style = button_style
         self.userpic = userpic
         self.corner_radius = corner_radius
         self.request_access = request_access
-        self.session_keys = ("id", "first_name", "username", "photo_url", "auth_date", "hash")
-
+        self.cookie_expiry_days = cookie_expiry_days
+        self.exp_date = self._set_exp_date()
+        self.session_keys = ("id", "first_name", "username", "photo_url", "auth_date", "hash", "exp_date")
+        if st.session_state.get("exp_date") and st.session_state["exp_date"] > datetime.utcnow().timestamp():
+            self.clear_session()
 
     @property
     def button(self):
@@ -41,10 +46,14 @@ class TelegramLoginWidgetComponent:
         )
         return _button
 
+    def _set_exp_date(self) -> int:
+        return int((datetime.utcnow() + timedelta(days=self.cookie_expiry_days)).timestamp())
+
     def set_session(self, **kwargs):
         for key in kwargs:
             if key in self.session_keys:
                 st.session_state[key] = kwargs[key]
+        st.session_state["exp_date"] = self.exp_date
 
     @property
     def get_session(self) -> Optional[dict]:
@@ -63,12 +72,11 @@ class TelegramLoginWidgetComponent:
 
 if not _RELEASE:
     import streamlit as st
-    import yaml
-    with open(f'{parent_dir}/config.yaml') as file:
-        config = yaml.load(file, Loader=yaml.SafeLoader)
-    widget_settings = config.get('witget_settings')
+    from streamlit_telegram_login.helpers import YamlConfig
+
+    config = YamlConfig(f"{parent_dir}/local_config.yaml")
     # widget_settings = dict.fromkeys(widget_settings)
-    telegram_login = TelegramLoginWidgetComponent(**widget_settings)
+    telegram_login = TelegramLoginWidgetComponent(**config.config)
     st.write("## Example")
     # telegram_login.clear_session()
     value = telegram_login.get_session or telegram_login.button

@@ -107,3 +107,6 @@ cookiecutter-pypackage-env/
 
 # streamlit
 .streamlit/secrets.toml
+
+# local configs
+local_config.yaml
