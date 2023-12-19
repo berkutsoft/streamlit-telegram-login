@@ -46,7 +46,7 @@ class YamlConfig:
 
         if 'cookie' in self.config:
             cfg_cookie = self.config['cookie']
-            if not isinstance(cfg_cookie.get('expiry_days'), int):
+            if not isinstance(cfg_cookie.get('expiry_days'), (int, float)):
                 raise YamlConfigError(ERROR_WRONG_FORMAT.format('"expiry_days" must accept only integer type.'))
         else:
             cfg_cookie = {"expiry_days": 30}

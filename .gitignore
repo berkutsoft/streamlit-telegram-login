@@ -110,3 +110,6 @@ cookiecutter-pypackage-env/
 
 # local configs
 local_config.yaml
+/streamlit_telegram_login/frontend/package-lock.json
+/streamlit_telegram_login/frontend/node_modules/
+/package-lock.json
