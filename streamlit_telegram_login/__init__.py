@@ -39,13 +39,14 @@ class TelegramLoginWidgetComponent:
       cookie_manager: cookieManager: cookieManager - manager for working with cookies
       session_keys: tuple - user session keys
       cookie_name: str - cookie name
-      key: str - key for JWT token encoding
+      secret_key: str - key for JWT token encoding
       token: str - current JWT token
       session_data: dict - user session data
     """
     def __init__(
         self,
         bot_username: str,
+        secret_key: str,
         *,
         button_style: str = "large",
         userpic: bool = True,
@@ -59,6 +60,7 @@ class TelegramLoginWidgetComponent:
 
         Args:
             bot_username: str - Username of the Telegram bot
+            secret_key: str - Secret key for JWT encode/decode
             button_style: str - Style of the login button (large, medium, small)
             userpic: bool - Whether to show user profile picture
             corner_radius: Optional[int] - Corner radius of the button or None for default
@@ -67,6 +69,7 @@ class TelegramLoginWidgetComponent:
             cookie_key: str - Key to use for cookie storage
         """
         self.bot_username = bot_username
+        self.secret_key = secret_key
         self.button_style = button_style
         self.userpic = userpic
         self.corner_radius = corner_radius
@@ -75,8 +78,7 @@ class TelegramLoginWidgetComponent:
         self.cookie_key = cookie_key
         self.cookie_manager = stx.CookieManager(key=cookie_key)
         self.session_keys = ("id", "first_name", "username", "photo_url", "auth_date", "hash", "exp_date")
-        self.cookie_name = "Berkut11"
-        self.key = "ABCBCA1"
+        self.cookie_name = self.__class__.__name__
         self.token = self.cookie_manager.get(self.cookie_name)
         self.session_data = self._token_decode(self.token)
         self._init_session_state()
@@ -110,12 +112,12 @@ class TelegramLoginWidgetComponent:
 
     def _token_encode(self, data: dict) -> str:
         """Encodes data into JWT token."""
-        return jwt.encode(data, self.key, algorithm='HS256')
+        return jwt.encode(data, self.secret_key, algorithm='HS256')
 
     def _token_decode(self, token: Union[str, bytes]) -> dict:
         """Decodes JWT token into data."""
         try:
-            return jwt.decode(token, self.key, algorithms=['HS256'])
+            return jwt.decode(token, self.secret_key, algorithms=['HS256'])
         except DecodeError:
             return {}
 
@@ -131,7 +133,7 @@ class TelegramLoginWidgetComponent:
         self.cookie_manager.set(
             self.cookie_name,
             self._token_encode(session_data),
-            key=self.__class__.__name__,
+            # secret_key=self.__class__.__name__,
             expires_at=datetime.now() + timedelta(seconds=self.cookie_expiry_days)
         )
 

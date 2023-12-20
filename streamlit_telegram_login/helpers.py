@@ -44,12 +44,14 @@ class YamlConfig:
             raise YamlConfigError(ERROR_WRONG_FORMAT.format('"request_access" must accept only boolean type.'))
         updated_config = cfg_widget.copy()
 
-        if 'cookie' in self.config:
-            cfg_cookie = self.config['cookie']
+        if cfg_cookie := self.config.get('cookie'):
             if not isinstance(cfg_cookie.get('expiry_days'), (int, float)):
                 raise YamlConfigError(ERROR_WRONG_FORMAT.format('"expiry_days" must accept only integer type.'))
         else:
             cfg_cookie = {"expiry_days": 30}
-
         updated_config.update(cfg_cookie)
+
+        if not self.config.get("secret_key"):
+            raise YamlConfigError(ERROR_WRONG_FORMAT.format('"secret_key" is required.'))
+        updated_config["secret_key"] = self.config["secret_key"]
         self.config = updated_config

@@ -6,3 +6,4 @@ widget:
   request_access: true # Set to send messages from your bot
 cookie:
   expiry_days: 30
+secret_key: "Your secret key" # secret for jwt encode/decode

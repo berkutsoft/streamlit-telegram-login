@@ -1,0 +1,9 @@
+widget:
+  bot_username: "my_tg_widget_login_bot"
+  button_style: "large"
+  userpic: true
+  corner_radius: 5
+  request_access: true
+cookie:
+  expiry_days: 30
+secret_key: "Your secret key" # secret for jwt encode/decode

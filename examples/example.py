@@ -6,7 +6,7 @@ from streamlit_telegram_login.helpers import YamlConfig
 
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 
-config = YamlConfig(f"{parent_dir}/local_config.yaml")
+config = YamlConfig(f"{parent_dir}/example_config.yaml")
 telegram_login = TelegramLoginWidgetComponent(**config.config)
 st.write("## Example")
 if not st.session_state["username"]:
