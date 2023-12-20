@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name="streamlit-telegram-login",
-    version="0.0.1",
+    version="0.0.2",
     author="Berkutsoft 11",
     author_email="berkut1011@gmail.com",
     description="Streamlit component that implements a telegram bot widget",
