@@ -4,7 +4,6 @@ import setuptools
 
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
-
 setuptools.setup(
     name="streamlit-telegram-login",
     version="0.0.3",
@@ -20,10 +19,10 @@ setuptools.setup(
     python_requires=">=3.8",
     license_files=("LICENSE",),
     install_requires=[
-        "streamlit>=1.28.0",
-        "jinja2",
-        "PyYAML >= 5.3.1",
-        "extra-streamlit-components>=0.1.60",
         "PyJWT >= 2.8.0",
+        "PyYAML >= 5.3.1",
+        "streamlit >= 1.28.0",
+        "extra-streamlit-components >= 0.1.60",
     ],
 )
+
